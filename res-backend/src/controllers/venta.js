@@ -16,7 +16,7 @@ const getAll = async(req, res) => {
 const getById = async(req, res) => {
     const {id} = req.params;
 
-    const venta = await getAllVentas({id});
+    const venta = await getVentaById({id});
     res.status(201)
     res.send(venta)
 }

@@ -1,9 +1,8 @@
-import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import React from 'react';
 import { GoHome } from "react-icons/go";
 import { IoStatsChart } from "react-icons/io5";
 import { RiLogoutBoxLine } from "react-icons/ri";
-import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 function SpanItem({icon, isSelected}) {
     return (

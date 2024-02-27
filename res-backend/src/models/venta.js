@@ -1,10 +1,10 @@
 const { connection } = require('../services/conecction.bd')
 
-const insertVenta = async ({date, hour, mesa_id, plato_id, cantidad}) => {
+const insertVenta = async ({date, hour, mesa_id}) => {
     try{
         await connection.execute(
-            'INSERT INTO Venta (venta_date, venta_time, mesa_id, plato_id, cantidad) VALUES (?, ?, ?, ?, ?)',
-            [date, hour, mesa_id, plato_id, cantidad]
+            'INSERT INTO Venta (venta_date, venta_time, mesa_id, estado) VALUES (?, ?, ?, ?)',
+            [date, hour, mesa_id, true ]
         )
         return { response: "Registro exitoso"}
     } catch(e){
@@ -16,9 +16,8 @@ const insertVenta = async ({date, hour, mesa_id, plato_id, cantidad}) => {
 const getAllVentas = async () => {
     try{
         const [ ventas ] = await connection.query(
-            'SELECT * FROM Venta'
-        )
-        'SELECT c.id_curso, c.nombre, c.codigo_curso, c.nivel, c1.nombre as requisito, c.id_creador_curso FROM curso c LEFT JOIN curso c1 ON c.id_requisito = c1.id_curso JOIN administrador a ON a.id_administrador = c.id_creador_curso;'
+            "SELECT Venta.venta_id, Venta.venta_date, Venta.venta_time, JSON_OBJECT('mesa_id', Mesa.mesa_id, 'mesa_name', Mesa.mesa_name) AS mesa, Venta.estado FROM Venta JOIN Mesa ON Venta.mesa_id = Mesa.mesa_id;"
+        );
     
         return ventas;
     }catch(e){
@@ -29,10 +28,10 @@ const getAllVentas = async () => {
 
 const getVentaById = async ({id}) => {
     try{
-        const [ venta ] = await connection.query(
-            'SELECT * FROM Ventas WHERE venta_id = ?',
+        const [venta] = await connection.query(
+            "SELECT Venta.venta_id, Venta.venta_date, Venta.venta_time, JSON_OBJECT('mesa_id', Mesa.mesa_id, 'mesa_name', Mesa.mesa_name) AS mesa, Venta.estado FROM Venta JOIN Mesa ON Venta.mesa_id = Mesa.mesa_id WHERE Venta.venta_id = ?",
             [id]
-        )
+        );
         return venta;
     }catch(e){
         console.error(e)

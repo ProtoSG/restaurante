@@ -8,6 +8,10 @@ const insertMesa = async ({name}) => {
         )
         return { response: 'Registro exitoso'}
     } catch(e){
+        if (e.code === 'ER_DUP_ENTRY') {
+            return { error: 'El nombre de la mesa ya está en uso' };
+        }
+
         console.error(e)
         throw e
     }
@@ -16,7 +20,7 @@ const insertMesa = async ({name}) => {
 const getAllMesa = async () => {
     try{
         const [ mesas ] = await connection.query(
-            'SELECT * FROM Mesa;'
+            'SELECT * FROM Mesa ORDER BY mesa_id;'
         )
         return mesas
     } catch(e) {
