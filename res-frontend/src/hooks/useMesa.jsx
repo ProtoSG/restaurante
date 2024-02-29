@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getMesas } from '../services/mesa';
 
-export default function useMesa() {
+export default function UseMesa() {
   const [mesas, setMesas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null)
@@ -12,7 +12,6 @@ export default function useMesa() {
         setLoading(true);
         setError(null)
         const mesas = await getMesas();
-        console.log(mesas)
         setMesas(mesas)
       } catch (e){
         setError(e.message)
@@ -26,5 +25,4 @@ export default function useMesa() {
   }, [])
 
   return { mesas, loading, error}
-
 }

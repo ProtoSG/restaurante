@@ -1,4 +1,4 @@
-const { insertPlato, getAllPlato, getPlatoById } = require('../models/plato');
+const { insertPlato, getAllPlato, getPlatoById, getLastPlato, getRankPlato } = require('../models/plato');
 
 const newPlato = async (req, res) => {
     const { nombre, precio } = req.body;
@@ -22,4 +22,16 @@ const getById = async(req, res) => {
     res.send(plato)
 }
 
-module.exports = { newPlato, getAll, getById }
+const getLast = async(req, res) => {
+    const plato = await getLastPlato();
+    res.send(plato)
+}
+
+const getRank = async(req, res) => {
+    const {date} = req.params;
+
+    const platos = await getRankPlato({date});
+    res.send(platos)
+}
+
+module.exports = { newPlato, getAll, getById, getLast, getRank }

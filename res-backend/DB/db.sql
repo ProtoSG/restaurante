@@ -1,9 +1,9 @@
 USE restaurant;
 
+DROP TABLE if exists VentaPlato;
 DROP TABLE if exists Venta;
 DROP TABLE if exists Plato;
 DROP TABLE if exists Mesa;
-DROP TABLE if exists VentaPlato; -- Nueva tabla de relación
 
 CREATE TABLE Plato (
     plato_id INT auto_increment PRIMARY KEY,
@@ -13,7 +13,7 @@ CREATE TABLE Plato (
 
 CREATE TABLE Mesa (
     mesa_id INT auto_increment PRIMARY KEY,
-    mesa_name VARCHAR(20) NOT NULL
+    mesa_name VARCHAR(20) NOT NULL UNIQUE
 );
 
 CREATE TABLE Venta (
@@ -21,6 +21,7 @@ CREATE TABLE Venta (
     venta_date DATE,
     venta_time TIME,
     mesa_id INT,
+    estado BOOLEAN, 
     FOREIGN KEY (mesa_id) REFERENCES Mesa(mesa_id)
 );
 

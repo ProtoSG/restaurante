@@ -1,38 +1,49 @@
 import { useState } from "react";
-import Pedido from '../model/pedido';
+import { postPlato } from "../services/plato";
+import { putVenta } from "../services/venta";
+import { postVentaPlato } from "../services/venta-plato";
 import Button from "./Button";
 import Input from "./Input";
 
-export default function RegistrarPlato({pedidos, setPedidos}){
+export default function RegistrarPlato({venta}){
 
     const [cantidad, setCantidad] = useState('')
     const [nombre, setNombre] = useState('')
     const [precio, setPrecio] = useState('')
-
     
-
-    const createPedido = () => {
-        const pedido = new Pedido(cantidad, nombre, precio)
-        setPedidos([...pedidos, pedido])
-    }
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         if( name === "nombre" ) setNombre(value);
         if( name === "precio" ) setPrecio(value);
         if( name === "cantidad" ) setCantidad(value);
     }
+    
+    const query = {
+        name : nombre,
+        price : precio
+    }
 
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
-        createPedido()
+        
+        try{
+            if(query.name === "" || query.price === "") return
 
-        setNombre('');
-        setPrecio('');
-        setCantidad('');
+            const plato_id = await postPlato({query})
+            const venta_id = venta.id
+            const sub_total = parseInt(cantidad) * parseFloat(precio)
+            
+            await postVentaPlato({venta_id, plato_id, cantidad, sub_total})
+            
+            await putVenta({estado: null, id: venta.id})
+            
+            setNombre('');
+            setPrecio('');
+            setCantidad('');
+        }catch (e){
+            console.error(e)
+        }
 
-        console.log("pedidos")
     }
 
     return(

@@ -1,4 +1,4 @@
-const { insertVenta, getAllVentas, getVentaById} = require('../models/venta')
+const { insertVenta, getAllVentas, getVentaById, getLastVenta, updateVenta, sumTotal} = require('../models/venta')
 
 const newVenta = async(req, res) => {
     const {date, hour, mesa_id, plato_id, cantidad} = req.body;
@@ -21,4 +21,24 @@ const getById = async(req, res) => {
     res.send(venta)
 }
 
-module.exports = {newVenta, getAll, getById}
+const getLast = async(req, res) => {
+    const {id} = req.params
+    const venta = await getLastVenta({id});
+    res.send(venta)
+}
+
+const putVenta = async(req, res) => {
+    const {id} = req.params;
+    const {estado} = req.body;
+    const response = await updateVenta({estado, id});
+    res.status(201)
+    res.send(response)
+}
+
+const getTotal = async(req, res) => {
+    const {date} = req.params;
+    const total = await sumTotal({date})
+    res.send(total)
+}
+
+module.exports = {newVenta, getAll, getById, getLast, putVenta, getTotal}
