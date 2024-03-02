@@ -6,13 +6,13 @@ export default function ListMesas() {
     const { mesas, loading, error } = UseMesa()
 
     return (
-        <div>
+        <section className="overflow-hidden">
         {
             loading ? <p>Cargando...</p>
             :
             <div className='grid grid-cols-3 gap-10 '>
             {mesas.map((mesa) => (
-                <div key={mesa.id} className='flex flex-col items-center justify-evenly w-full h-40 bg-bg-200 m-2 text-text-100 px-4 rounded-3xl shadow-2xl'>
+                <div key={mesa.id} className='flex flex-col items-center justify-evenly w-full h-40 bg-bg-200 mt-4 text-text-100 px-4 rounded-3xl shadow-inner shadow-bg-300'>
                     <p className='text-2xl'>Mesa {mesa.name}</p>
                     
                     <Dialog mesa = {mesa}/>
@@ -20,6 +20,6 @@ export default function ListMesas() {
             ))}
             </div>
         }
-        </div>
+        </section>
     );
 }

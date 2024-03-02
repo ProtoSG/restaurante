@@ -1,13 +1,15 @@
 import React from 'react';
+import { FaUserLarge } from "react-icons/fa6";
 import { GoHome } from "react-icons/go";
 import { IoStatsChart } from "react-icons/io5";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { Link, useLocation } from 'react-router-dom';
+import { logout } from '../services/login';
 
 function SpanItem({icon, isSelected}) {
     return (
-        <span className={`mr-2 w-12 h-12 rounded-xl bg-bg-200 flex justify-center items-center text-2xl
-        ${isSelected ? 'bg-primary-100' : 'text-text-200'}
+        <span className={`mr-2 w-12 h-12 rounded-xl  flex justify-center items-center text-2xl
+        ${isSelected ? 'bg-primary-100 text-primary-300' : 'bg-bg-200 text-text-200'}
         `}>{icon}</span>
     )
 
@@ -27,12 +29,19 @@ function ItemHeader({name, link, icon}) {
     )
 }
 
-export default function Header() {
- 
+export default function Header({user}) {
+
+    const logOut = () => {
+        logout()
+    }
+
 return (
-    <header className='h-[90dvh] min-w-56 text-text-100 flex flex-col justify-between items-center  '>
-        <div>
-            <div className='w-20 h-20 bg-bg-200 rounded-full'></div>
+    <header className='h-[80dvh] min-w-48 text-text-100 flex flex-col justify-between items-center  '>
+        <div className='flex justify-center items-center flex-col'>
+            <div className='w-20 h-20 bg-bg-200 rounded-full flex justify-center items-center text-4xl shadow-inner shadow-gray-600 '>
+                <FaUserLarge />
+            </div>
+            <span className='font-semibold text-text-100 mt-4'>{user.username}</span>
         </div>
         <nav className='w-full'>
             <ul>
@@ -40,10 +49,10 @@ return (
                 <ItemHeader  name='Dashboard' link='dashboard' icon={<IoStatsChart/>}/>
             </ul>
         </nav>
-        <button className='flex items-center text-xl w-full '>
+        <a  href='/login' onClick={logOut} className='flex items-center text-xl w-full hover:bg-primary-100 rounded-2xl '>
             <SpanItem icon={<RiLogoutBoxLine/>}/>
             Logout
-        </button>
+        </a>
     </header>
     )
 }

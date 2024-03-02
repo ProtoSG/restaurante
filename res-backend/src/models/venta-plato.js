@@ -43,4 +43,24 @@ const getVentaPlatoByid = async({id}) => {
     }
 }
 
-module.exports = {insertVentaPlato, getVentaPlatoByid}
+const deleteVentaPlato = async({idVentaPlato, idPlato}) => {
+    try{
+        await connection.execute(
+            "DELETE FROM VentaPlato WHERE venta_plato_id = ?;",
+            [idVentaPlato]
+            )
+
+        await connection.execute(
+            "DELETE FROM Plato WHERE Plato.plato_id = ?;",
+            [idPlato]
+        )
+
+        return { response : "Eliminado de manera exitosa"}
+
+    }catch (e){
+        console.error(e)
+        throw e
+    }
+}
+
+module.exports = {insertVentaPlato, getVentaPlatoByid, deleteVentaPlato}

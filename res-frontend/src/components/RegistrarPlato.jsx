@@ -51,6 +51,13 @@ export default function RegistrarPlato({venta}){
             <form onSubmit={handleSubmit} className="flex gap-5  w-full">
                 <Input
                     type = {"text"}
+                    name = {"cantidad"}
+                    placeholder={"Cantidad..."}
+                    value={cantidad}
+                    onChange={handleChange}
+                />
+                <Input
+                    type = {"text"}
                     name={"nombre"}
                     placeholder={"Nombre..."}
                     value = {nombre}
@@ -63,13 +70,7 @@ export default function RegistrarPlato({venta}){
                     value = {precio}
                     onChange={ handleChange } 
                 />
-                <Input
-                    type = {"text"}
-                    name = {"cantidad"}
-                    placeholder={"Cantidad..."}
-                    value={cantidad}
-                    onChange={handleChange}
-                />
+                
                 <Button name={"Agregar"} />
             </form>
         </section>

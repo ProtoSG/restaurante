@@ -3,8 +3,8 @@ const { connection } = require('../services/conecction.bd')
 const insertVenta = async ({date, hour, mesa_id}) => {
     try{
         await connection.execute(
-            'INSERT INTO Venta (venta_date, venta_time, mesa_id, estado, venta_total) VALUES (?, ?, ?, ?, ?)',
-            [date, hour, mesa_id, true, 0]
+            'INSERT INTO Venta (venta_date, venta_time, mesa_id, estado, venta_total, venta_yape) VALUES (?, ?, ?, ?, ?, ?)',
+            [date, hour, mesa_id, true, 0, 0]
         )
         return { response: "Registro exitoso"}
     } catch(e){
@@ -71,17 +71,21 @@ const getLastVenta = async ({id}) => {
     }
 }
 
-const updateVenta = async ({estado, id}) => {
+const updateVenta = async ({estado, id, yape}) => {
     try{
         if(estado !== null){
-            await connection.query(
-                "UPDATE Venta SET estado = ? WHERE venta_id = ?;",
-                [estado, id]
-            );    
+            await connection.execute(
+                "UPDATE Venta SET " +
+                    "estado = ?, " +
+                    "venta_yape = ? " +
+                "WHERE venta_id = ?;",
+                [estado, yape,id]
+            );
         } else{
-            await connection.query(
-                "UPDATE Venta "+
-                "SET venta_total = (SELECT SUM(sub_total) FROM VentaPlato WHERE venta_id = ?) "+
+            await connection.execute(
+                "UPDATE Venta " +
+                "SET " +
+                    "venta_total = (SELECT SUM(sub_total) FROM VentaPlato WHERE venta_id = ?) "+
                 "WHERE venta_id = ?;",
                 [id, id]
             )
@@ -98,7 +102,10 @@ const updateVenta = async ({estado, id}) => {
 const sumTotal = async ({date}) => {
     try{
         const [total] = await connection.query(
-            "SELECT SUM(venta_total) AS total FROM Venta Where venta_date = ?",
+            "SELECT " +
+                    "SUM(venta_total) AS total, " +
+                    "SUM(venta_yape) AS yape " +
+                "FROM Venta Where venta_date = ?;",
             [date]
         )
 

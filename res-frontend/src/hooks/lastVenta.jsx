@@ -22,7 +22,7 @@ export default function lastVenta({mesa}) {
 
         const intervalId = setInterval(() =>{
             fetchVenta();
-        }, 500)
+        }, 100)
 
 
         return () => clearInterval(intervalId)

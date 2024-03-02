@@ -11,12 +11,12 @@ export default function RegisterMesa() {
         setQuery(e.target.value);
     }
 
-    const handleSubmit = (e) => {
-        putMesa({query});
+    const handleSubmit = async (e) => {
+        await putMesa({query});
     }
 
   return (
-    <section className=' bg-bg-300 px-4 py-8 rounded-3xl shadow-2xl shadow-black  '>
+    <section className=' bg-bg-200 px-4 py-8 rounded-3xl shadow-inner   '>
         <form onSubmit={handleSubmit} className='flex gap-6 ' >
             <Input
                 type = {"text"}

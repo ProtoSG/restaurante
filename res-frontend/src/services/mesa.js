@@ -35,7 +35,6 @@ const putMesa = async ({query}) => {
 
         const responseData = await response.json();
         console.log('Respuesta del servidor:', responseData);
-        setQuery('')
     }catch (e){
         console.error(e)
         throw e

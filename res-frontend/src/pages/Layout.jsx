@@ -2,12 +2,12 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from '../components/Header'
 
-export default function Layout() {
+export default function Layout({user}) {
   return (
     <div className='flex px-8 gap-12 w-full'>
-        <Header />
-        <hr className='border-2 h-[90dvh] bg-text-200'/>
+        <Header user = {user} />
+        <hr className='border-[1px] h-[90dvh] border-bg-300 '/>
         <Outlet />
     </div>
   )
-}
+} 

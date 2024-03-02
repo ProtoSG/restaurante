@@ -1,10 +1,11 @@
 const { Router } = require('express')
-const { postVentaPlato, getById } = require("../controllers/venta-plato")
+const { postVentaPlato, getById, deleteVP } = require("../controllers/venta-plato")
 
 const router = Router()
 
 router
     .post('/', postVentaPlato)
-    .get('/:id', getById);
+    .get('/:id', getById)
+    .delete('/:idVentaPlato', deleteVP);
 
 module.exports = router

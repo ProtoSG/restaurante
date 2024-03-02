@@ -47,5 +47,28 @@ const getVentaPlatoById = async ({id}) =>{
     }
 }
 
-export { getVentaPlatoById, postVentaPlato };
+const deleteVentaPlato = async({idVentaPlato, idPlato}) => {
+    try{
+        const data = {idPlato}
+        const response = await fetch(`http://localhost:3000/venta-plato/${idVentaPlato}`, {
+            method: 'DELETE',
+            headers:{
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
+        if(!response.ok){
+            throw new Error('Error al eliminar el registro de VentaPlato');
+        }
+
+        const res = await response.json();
+        console.log(res)
+    }catch(e){
+        console.error(e)
+        throw e
+    }
+}
+
+export { deleteVentaPlato, getVentaPlatoById, postVentaPlato };
 

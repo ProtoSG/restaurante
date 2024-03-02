@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react'
-import { getAll } from '../services/venta'
+import { getDays } from '../services/venta'
 
-export default function UseVenta() {
+export default function UseDays() {
 
-    const [ventas, setVentas] = useState([])
-    const [loadingVentas, setLoadingVentas] = useState(false)
-    const [errorVentas, setErrorVentas] = useState(null)
+    const [dayData, setVentas] = useState([])
+    const [loadingDayData, setLoadingVentas] = useState(false)
+    const [errorDayData, setErrorVentas] = useState(null)
 
     useEffect(() =>{
         async function fetchVentas(){
             try{
                 setLoadingVentas(true)
                 setErrorVentas(null)
-                const ventas = await getAll();
+                const ventas = await getDays();
                 setVentas(ventas)
             }catch (e) {
                 setErrorVentas(e.message)
@@ -24,5 +24,5 @@ export default function UseVenta() {
         fetchVentas()
     }, [])
 
-    return { ventas, loadingVentas, errorVentas}
+    return { dayData, loadingDayData, errorDayData}
 }

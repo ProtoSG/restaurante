@@ -1,4 +1,4 @@
-const postVenta = async ({mesa}) => {
+const postVenta = async ({id}) => {
     try{
         const fechaActual = new Date();
         fechaActual.setHours(fechaActual.getHours() - 5);
@@ -6,7 +6,7 @@ const postVenta = async ({mesa}) => {
         const data = {
             date: fechaActual.toISOString().slice(0, 10),
             hour: fechaActual.toISOString().slice(11, 19),
-            mesa_id: mesa.id
+            mesa_id: id
         }
 
         const response = await fetch('http://localhost:3000/venta', {
@@ -75,23 +75,25 @@ const getTotal = async () =>{
             throw new Error('Hubo un problema en la solicitud: ' + response.status);
         }
 
-        const total = await response.json()
-        console.log("Total: ",  total)
-        return total[0].total
+        const res = await response.json()
+        return {
+            total: res[0]?.total || 0,
+            yape : res[0]?.yape || 0
+        }
     }catch (e){
         console.error(e)
         throw e
     }
 } 
 
-const putVenta = async ({id, estado}) => {
+const putVenta = async ({id, estado, yape}) => {
     try{
         const response = await fetch(`http://localhost:3000/venta/${id}`,{
             method: 'PUT',
             headers:{
                 'Content-Type' : 'application/json'
             },
-            body: JSON.stringify({estado})
+            body: JSON.stringify({estado, yape})
         })
         if (!response.ok){
             throw new Error('Hubo un problema en la solicitud: ' + response.status);
@@ -105,7 +107,7 @@ const putVenta = async ({id, estado}) => {
     }
 }
 
-const getAll = async () => {
+const getDays = async () => {
     try{
         const response = await fetch("http://localhost:3000/venta")
 
@@ -126,5 +128,5 @@ const getAll = async () => {
     }
 }
 
-export { getAll, getLastVenta, getTotal, postVenta, putVenta };
+export { getDays, getLastVenta, getTotal, postVenta, putVenta };
 

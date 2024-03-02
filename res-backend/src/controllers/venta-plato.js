@@ -1,4 +1,4 @@
-const { insertVentaPlato, getVentaPlatoByid } = require("../models/venta-plato") 
+const { insertVentaPlato, getVentaPlatoByid, deleteVentaPlato } = require("../models/venta-plato") 
 
 const postVentaPlato = async(req, res) => {
     const {plato_id, venta_id, cantidad, sub_total} = req.body;
@@ -15,4 +15,13 @@ const getById = async(req, res) => {
     res.send(venta_plato)
 }
 
-module.exports = {postVentaPlato, getById}
+const deleteVP = async(req, res) => {
+    const {idPlato} = req.body;
+    const {idVentaPlato} = req.params;
+
+    const response = await deleteVentaPlato({idVentaPlato, idPlato})
+    res.status(200)
+    res.send(response)
+}
+
+module.exports = {postVentaPlato, getById, deleteVP}

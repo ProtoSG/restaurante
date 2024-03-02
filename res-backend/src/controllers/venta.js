@@ -29,8 +29,8 @@ const getLast = async(req, res) => {
 
 const putVenta = async(req, res) => {
     const {id} = req.params;
-    const {estado} = req.body;
-    const response = await updateVenta({estado, id});
+    const {estado, yape} = req.body;
+    const response = await updateVenta({estado, id, yape});
     res.status(201)
     res.send(response)
 }

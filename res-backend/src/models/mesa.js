@@ -6,6 +6,7 @@ const insertMesa = async ({name}) => {
             'INSERT INTO Mesa (mesa_name) VALUES (?)',
             [name]
         )
+
         return { response: 'Registro exitoso'}
     } catch(e){
         if (e.code === 'ER_DUP_ENTRY') {

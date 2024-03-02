@@ -21,7 +21,7 @@ export default function useVentaPlato({id}) {
 
         const intervalId = setInterval(() =>{
             fetchVentaPlato()
-        }, 1000)
+        }, 500)
 
         return () => clearInterval(intervalId)
     }, [id])

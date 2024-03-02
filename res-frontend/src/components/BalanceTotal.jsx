@@ -6,16 +6,16 @@ export default function BalanceTotal() {
     const { total, loadingTotal, errorTotal} = UseTotal()
 
   return (
-    <section className='py-8 px-8 bg-gradient-to-r from-bg-200 to-bg-300 row-span-2 rounded-2xl'>
+    <section className='py-8 px-8 bg-gradient-to-r from-primary-100 to-primary-200 row-span-2 rounded-2xl shadow-inner'>
         {
             loadingTotal ? (<p>Cargando...</p>)
             :(
                 <>
-                <h2 className='text-accent-200 text-2xl text-bold mb-10'>Total balance</h2>
+                <h2 className='text-accent-200 text-2xl text-bold mb-10 font-semibold'>Balance Total</h2>
                     <div className='h-[80%] flex justify-center items-center'>
-                        <p className='text-3xl text-accent-100 '>$
+                        <p className='text-3xl text-primary-300 '>$
                             <span className='ml-4 text-[6rem] text-primary-300 text-center'>
-                                {total}
+                                {total?.total.toFixed(2)}
                             </span>
                         </p>
                     </div>
